@@ -49,7 +49,8 @@ class PoseEstimation(Dataset):
                  num_points=2048,
                  data_dir="./data",
                  split='train',
-                 transform=None
+                 transform=None,
+                 num_classes=6
                  ):
         data_dir = os.path.join(
             os.getcwd(), data_dir) if data_dir.startswith('.') else data_dir
@@ -58,6 +59,7 @@ class PoseEstimation(Dataset):
         self.num_points = num_points
         logging.info(f'==> sucessfully loaded {self.partition} data')
         self.transform = transform
+        self.num_classes = num_classes
 
     def __getitem__(self, item):
         pointcloud = self.data[item][:self.num_points]
@@ -80,7 +82,7 @@ class PoseEstimation(Dataset):
 
     @property
     def num_classes(self):
-        return 6
+        return self.num_classes
 
     """ for visulalization
     from openpoints.dataset import vis_multi_points
